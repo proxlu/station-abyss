@@ -23,4 +23,4 @@ Quatro tripulantes com personalidades e papéis táticos distintos unem forças 
 * **Fliperama Retro "Space Spooter":** Encontre terminals de arcade antigos funcionais pelos corredores e vença o minigame clássico de desviar de 100 meteoros para conceder a bênção permanente da *Defesa Impenetrável* à sua equipe.
 * **Suporte Completo a Idiomas:** Textos e diálogos inteiramente localizados em Português, Inglês e Japonês.
 
-**Game:** [https://proxlu.itch.io/station-abyss](https://proxlu.itch.io/station-abyss)
+**Página para Download:** [https://proxlu.itch.io/station-abyss](https://proxlu.itch.io/station-abyss)
