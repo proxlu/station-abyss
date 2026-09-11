@@ -1,0 +1,28 @@
+func _input(event: InputEvent) -> void:
+	if event is InputEventKey and event.pressed and not event.echo:
+		# F9: Abre o Game Over na hora
+		if event.keycode == KEY_F9:
+			game_over_script.stat_floor_reached = current_floor
+			game_over_script.stat_enemies_killed = 16
+			game_over_script.stat_treasures_collected = 11
+			game_over_script.stat_has_chronodox = true
+			game_over_script.stat_living_allies = 0
+			var go = Control.new()
+			go.set_script(game_over_script)
+			get_tree().root.add_child(go)
+			get_tree().current_scene.queue_free()
+			get_tree().current_scene = go
+			get_viewport().set_input_as_handled()
+
+		# F10: Abre a tela de Score/Vitória na hora
+		elif event.keycode == KEY_F10:
+			if hud_panel: hud_panel.hide()
+			if minimap: minimap.hide()
+			credits_screen.show()
+			credits_screen._show_victory_report({
+				"floor": 4, 
+				"enemies_killed": 28, 
+				"treasures": 14, 
+				"has_chronodox": true
+			})
+			get_viewport().set_input_as_handled()
