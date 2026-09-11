@@ -2371,6 +2371,9 @@ func _on_battle_ended(victory: bool, enemies_killed: int, is_boss: bool = false,
 		var title = Localization.t("popup_level_up_title", "PROGRESSÃO TÁTICA!")
 		var desc = Localization.t("popup_level_up_body", "%s Atributos aumentados!") % pending_level_up_summary
 		pending_level_up_summary = ""
+		hud_panel.show()
+		minimap.show()
+		update_hud()
 		show_system_message("[color=#00e5ff]" + title + "[/color]", desc, null, Callable(), "sfx_level_up")
 		return
 
