@@ -1374,6 +1374,8 @@ func start_turn_selection():
 	pending_actions.clear()
 	defending_members.clear()
 	stun_applied_this_round.clear()
+	is_kira_taunting = false    # <-- Garante que não vaza de um turno para o outro
+	taunt_remaining_hits = 0 
 
 	for key in ["humano", "mutante", "alien", "robo"]:
 		if key == "mutante" and party_system_ref.is_kira_away: continue
@@ -1649,6 +1651,8 @@ func resolve_turn_actions():
 		if act.action == "Defender":
 			defending_members[act.actor.id] = true
 			act.speed = 99999
+		elif act.action == "Provocar": # <-- ADICIONE AQUI
+			act.speed = 99998
 
 	pending_actions.append({"actor": {"id": current_enemy_id, "is_enemy": true}, "action": "Ataque Horda", "speed": current_enemy_speed})
 	pending_actions.sort_custom(func(a, b): return a.speed > b.speed)
@@ -1865,8 +1869,8 @@ func execute_next_action():
 						update_single_ally_hp(target_key)
 
 					if is_kira_taunting:
-						taunt_remaining_hits -= 1
-						if taunt_remaining_hits <= 0: is_kira_taunting = false
+						is_kira_taunting = false
+						taunt_remaining_hits = 0
 
 				elif is_master_boss and active_master_type == "androide":
 					var chosen_target = "mutante" if (is_kira_taunting and party_system_ref.members["mutante"].hp > 0) else living_allies[randi() % living_allies.size()]
@@ -1927,8 +1931,8 @@ func execute_next_action():
 							log_message(hit2_msg)
 
 						if is_kira_taunting:
-							taunt_remaining_hits -= 1
-							if taunt_remaining_hits <= 0: is_kira_taunting = false
+							is_kira_taunting = false
+							taunt_remaining_hits = 0
 
 						update_battle_ui(true)
 						if not check_deaths():
@@ -1976,8 +1980,8 @@ func execute_next_action():
 							if audio_manager: audio_manager.play_sfx("sfx_hit")
 
 						if is_kira_taunting:
-							taunt_remaining_hits -= 1
-							if taunt_remaining_hits <= 0: is_kira_taunting = false
+							is_kira_taunting = false
+							taunt_remaining_hits = 0
 
 						update_battle_ui(true)
 						if not check_deaths():
@@ -2023,10 +2027,9 @@ func execute_next_action():
 							stunned_allies[target_key] = 1
 							stun_applied_this_round[target_key] = true
 
-						if is_kira_taunting:
-							taunt_remaining_hits -= 1
-							if taunt_remaining_hits <= 0 or party_system_ref.members["mutante"].hp <= 0:
-								is_kira_taunting = false
+					if is_kira_taunting:
+						is_kira_taunting = false
+						taunt_remaining_hits = 0
 
 				if total_dmg_dealt > 0:
 					if lang == "en": log_message("The enemy attack dealt %d damage to the squad!" % total_dmg_dealt)
@@ -2142,6 +2145,7 @@ func execute_next_action():
 				, Color(2.5, 1.2, 0.1), Color(1.0, 0.55, 0.0))
 			)
 		elif act.action == "Provocar":
+			act.speed = 99998
 			play_special_cutin("mutante", func():
 				if audio_manager: audio_manager.play_sfx("sfx_meow")
 				is_kira_taunting = true
