@@ -1,0 +1,787 @@
+# Localization.gd
+class_name Localization
+extends RefCounted
+
+static var current_language: String = "pt"
+
+const STRINGS: Dictionary = {
+	"pt": {
+		"cs_to_be_continued": "CONTINUA...",
+		"cs_post_credits_echo": "[i](Ofegante)[/i] Droga... Meus sistemas não respondem... Quantos de vocês ainda restam...?! Então é aqui que eu desligo...?",
+		"cs_post_credits_akiba_1": "Não sei quem é você, mas não tenho mais nada pra fazer por aqui e tô irritado com esse lugar.",
+		"cs_post_credits_akiba_2": "Eu sou Akiba, aliás.",
+		
+		# Cargos e Nomes
+		"role_humano": "Capitão",
+		"role_mutante": "Tanque / Brawler",
+		"role_alien": "Dano Elemental",
+		"role_robo": "Suporte",
+
+		# Title & Language
+		"lang_prompt": "SELECIONE O IDIOMA  /  SELECT LANGUAGE  /  言語選択",
+		"btn_start_game": "INICIAR MISSÃO",
+		"btn_quit_game": "SAIR DO JOGO",
+
+		# HUD & Exploration
+		"hud_floor": "ANDAR: %d (Estação Orbital)\nCHAVE: %s\nTESOUROS: %d",
+		"hud_key_yes": "SIM (ALERTA ATIVO)",
+		"hud_key_no": "NÃO",
+		"hud_mission_title": "MISSÃO DATA DRIVE:\nCaçar %s: %02d/%02d\nAndar Orbital %d",
+		"hud_mission_complete": "DADOS COLETADOS\nRequisito Concluído!\nRetorne ao Terminal!",
+		"interaction_chest_closed": "[E] Abrir Baú",
+		"interaction_chest_opened": "Baú Vazio",
+		"interaction_heal": "[E] Usar Pod Médico (Restaurar Party)",
+		"interaction_portal_locked": "[E / A] Entrar no Portal (Requer Chave)",
+		"interaction_portal_unlocked": "[E / A] Entrar no Portal",
+		"interaction_spooter": "[E] Jogar Space Spooter",
+		"interaction_spooter_off": "Terminal Desativado (Parou de funcionar)",
+		"interaction_terminal": "[E] Acessar Terminal de Dados",
+		"interaction_terminal_off": "Terminal Desativado (Gravação Concluída)",
+		"interaction_orb": "[E] Coletar Excesso de Dados (%s)",
+		"interaction_hidden": "[E] Tesouro Detectado",
+		"interaction_hidden_done": "Cápsula Já Coletada",
+		"interaction_csouter": "[E] Coletar C-Souter (Radar de Telemetria)",
+		"interaction_csouter_done": "Item Coletado",
+
+		# Hole Keeper & Núcleo
+		"interaction_hole_keeper": "[E] Falar com Hole Keeper",
+		"interaction_hole_keeper_done": "Fenda Quântica Vazia",
+		"party_source": "FONTE",
+		"party_battery": "FONTE",
+		"hk_title": "★ FENDA QUÂNTICA - HOLE KEEPER %s",
+		"hk_intro_dialogue": "« A filial anterior perdeu a esfera de novo?! Incompetentes! Entregue-me o Chronodox para que eu possa recalibrar o núcleo do seu traje. »",
+		"hk_no_chronodox_msg": "Você não possui o Chronodox para negociar com o Hole Keeper!",
+		"hk_btn_hand_chronodox": "[ E / ENTER ] Entregar Chronodox (-1 Tesouro)",
+		"hk_btn_leave": "[ESC] Sair da Fenda",
+		"hk_select_crew_title": "SELECIONE O TRIPULANTE PARA ADULTERAÇÃO DO NÚCLEO:",
+		"hk_mod_hp_name": "Núcleo de HP",
+		"hk_mod_hp_tag": "+HP\n-MP",
+		"hk_mod_mp_name": "Núcleo de MP",
+		"hk_mod_mp_tag": "+MP\n-HP",
+		"hk_mod_vel_name": "Núcleo de VEL",
+		"hk_mod_vel_tag": "+VEL\n-DMG",
+		"hk_mod_dmg_name": "Núcleo de DMG",
+		"hk_mod_dmg_tag": "+DMG\n-VEL",
+		"hk_mod_restore_name": "Restaurar Núcleo ao Normal",
+		"hk_btn_back_crew": "[ESC] Voltar / Escolher Outro Tripulante",
+		"popup_battery_applied_title": "★ NÚCLEO ADULTERADO COM SUCESSO!",
+		"popup_battery_applied_desc": "Núcleo de %s recalibrado!",
+		"popup_battery_restored_title": "★ NÚCLEO RESTAURADO!",
+		"popup_battery_restored_desc": "O núcleo de %s foi restaurado para o estado Normal!",
+		"hk_no_treasure_restore": "Recursos insuficientes! É necessário 1 Tesouro para restaurar o núcleo.",
+
+		# Popups e Eventos
+		"popup_detector_title": "★ ESPÓLIO DE COMBATE RARO!",
+		"popup_detector_desc": "A horda dropou um Detector de Metais!\nSinais de ressonância acoplados ao radar da equipe.",
+		"popup_csouter_title": "★ C-SOUTER ADQUIRIDO COM SUCESSO!",
+		"popup_csouter_desc": "Radar óptico de combate equipado no visor da equipe.",
+		"popup_spooter_buff_title": "★ SPACE SPOOTER BUFF ATIVADO!",
+		"popup_spooter_buff_desc": "Protocolo de Defesa Impenetrável assimilado com sucesso!",
+		"popup_datadrive_title": "★ DATA DRIVE CALIBRADO COM SUCESSO!",
+		"popup_datadrive_desc": "Data Drive calibrado e sincronizado com %s!",
+		"popup_chronodox_title": "★ TESOURO ARTEFATO REVELADO!",
+		"popup_chronodox_desc": "A equipe adquiriu um tesouro de valor inestimável: Chronodox!",
+		"popup_chronodox_kira_desc": "A equipe adquiriu o Chronodox e KIRA REUNIU-SE AO GRUPO!",
+		"popup_kira_away_warn": "Kira ficou impaciente com a lentidão e avançou sozinha pelos corredores!",
+		"popup_kira_away_title": "⚠ ATENÇÃO:",
+		"kira_away_dialogue": "Humano, você tá andando parecendo uma barata tonta na parede! Cansaço só de olhar... Cansei de esperar, vou na frente quebrar umas portas!",
+		"popup_level_up_title": "PROGRESSÃO TÁTICA!",
+		"popup_level_up_body": "%s Atributos aumentados!",
+		"esc_confirm_title": "RETORNAR AO TÍTULO?",
+		"esc_confirm_yes": "SIM (Sair)",
+		"esc_confirm_no": "NÃO",
+
+		# Popups dos Mestres Derrotados
+		"popup_master_drone_title": "★ VICTOR-PRIME FOI DESTRUÍDO!",
+		"popup_master_drone_desc": "Victor-Prime foi aniquilado!\nA rede de comando dos Drones entrou em colapso total.",
+		"popup_master_mutante_title": "★ DR. GHORGORATH FOI ABATIDO!",
+		"popup_master_mutante_desc": "Dr. Ghorgorath sucumbiu!\nA cadeia biológica das Feras Mutantes foi desestabilizada.",
+		"popup_master_androide_title": "★ VALERIA X-9 FOI DESATIVADA!",
+		"popup_master_androide_desc": "Valeria X-9 foi desmantelada!\nA diretriz hostil dos Androides Corrompidos foi rompida.",
+		"popup_master_alien_title": "★ XYLOX FOI EXTERMINADO!",
+		"popup_master_alien_desc": "Xylox foi exterminado!\nA ressonância psíquica dos Alien Scouts foi dissipada.",
+
+		# Party Menu
+		"party_title": "STATUS DA EQUIPE",
+		"party_subtitle": "REGISTRO TÁTICO, CARGA DE EQUIPAMENTO E ATRIBUTOS DO ESQUADRÃO",
+		"party_cargo": "CARGA",
+		"party_status_alive": "VIVO",
+		"party_status_dead": "INCAPACITADA",
+		"party_status_away": "AUSENTE",
+		"party_target": "ALVO",
+		"party_footer": "[TAB / ESC] Retornar   |   [1 - 4] Alternar Alvo Tático",
+		"party_spooter_banner": "★ PROTOCOLO DE DEFESA IMPENETRÁVEL ATIVO",
+
+		# Combate
+		"battle_boss_badge": "★ IMPERADOR DO TEMPO - CHEFE FINAL ★",
+		"battle_purge_badge": "⚠ PROTOCOLO DE PURGA ATIVO ⚠",
+		"battle_weakened_badge": "▼ TROPAS DESORGANIZADAS ▼",
+		"battle_act_attack": "[1] Atacar Singular",
+		"battle_act_skills": "[2] Habilidades",
+		"battle_act_defend": "[3] Defender",
+		"battle_act_defend_buff": "[3] ★ Defender (Impenetrável)",
+		"battle_act_flee": "[4] Fugir (Grupo)",
+		"battle_skill_aoe": "[1] Magia de Área (15 MP)",
+		"battle_skill_heal_single": "[2] Curar Alvo Crítico (10 MP)",
+		"battle_skill_drive": "[3] Drive (30 MP)",
+		"battle_skill_taunt": "[3] Provocar (20 MP)",
+		"battle_skill_obscure": "[3] Obscure (30 MP)",
+		"battle_skill_heal_party": "[3] Cura em Grupo (20 MP)",
+		"battle_skill_locked_fmt": "[3] %s [Bloqueado Lv.5]",
+		"battle_skill_back": "[4] Voltar",
+		"battle_csouter_title": "◈ C-SOUTER RADAR ◈",
+		"battle_csouter_readout": "ALVO: %s\nUNIDADES: %d\nPDL TOTAL: [ %d ]",
+
+		# Game Over & Relatórios
+		"gameover_title": "O CAPITÃO CAIU\nMISSÃO FRACASSADA",
+		"mission_report_title": "RELATÓRIO DA MISSÃO:",
+		"gameover_stats": "• Andar Alcançado:    %d\n• Inimigos Abatidos:  %d\n• Tesouros Coletados: %d\n• Chronodox:          %s\n• Aliados Vivos:      %d / 4",
+		"gameover_retry_btn": "RETORNAR AO TÍTULO",
+		"chronodox_found": "RESGATADO COM SUCESSO",
+		"chronodox_not_found": "NÃO ENCONTRADO",
+
+		# Câmara do Cofre
+		"vault_prompt_title": "★ CÂMARA DE DADOS - PROTOCOLO DE EXTRAÇÃO ★",
+		"vault_prompt_desc": "Sensores detectaram compartimentos de telemetria despressurizados.\nComo o Capitão deseja proceder?",
+		"vault_btn_start": "[ 1 / E ] Iniciar Desafio (10 Baús em 60s)",
+		"vault_btn_skip": "[ 2 / ESC ] Cota Segura (Resgatar 5 Baús de EXP e Sair)",
+		"vault_countdown_go": "VAI!",
+		"vault_safe_title": "★ COTA SEGURA ASSEGURADA ★",
+		"vault_safe_desc": "5 Baús de telemetria foram resgatados em segurança (+%d EXP, +5 Tesouros).\nO Pod médico e o Portal de saída foram ativados.",
+		"vault_win_step1_title": "★ EXTRAÇÃO CONCLUÍDA (10/10) ★",
+		"vault_win_step1_desc": "Incrível! Todos os 10 contêineres de dados foram coletados antes do tempo limite!",
+		"vault_win_step2_title": "★ BÔNUS DUPLO ATIVADO! ★",
+		"vault_win_step2_desc": "Desempenho perfeito! O prêmio foi DOBRADO (+%d EXP extra e +10 Tesouros adicionais)!",
+		"vault_time_up_title": "TEMPO ESGOTADO (%d/10)",
+		"vault_time_up_desc": "Câmara trancada. O portal de saída e o pod de cura foram ativados.",
+
+		# Créditos
+		"victory_title": "MISSÃO CUMPRIDA\nSTATION ABYSS VENCIDA",
+		"victory_stats": "• Andar Final Alcançado:  %d\n• Inimigos Abatidos:      %d\n• Tesouros Coletados:     %d\n• Chronodox:              %s\n• Status da Equipe:       SOBREVIVENTES",
+		"victory_prompt": "[ Pressione ESPAÇO / ENTER para Retornar ao Menu ]",
+
+		# Cutscenes Extras dos Pods Médicos
+		"cutscene_extra_1_text": "Meu alvo está aqui. Station Abyss. Dessa vez não escapa.",
+		"cutscene_extra_2_text": "Valeria... então é aqui que você está. Com as minhas respostas.",
+		"cutscene_extra_3_text_1": "Nossa, fazia tempo que eu não via o Império tão vazio.",
+		"cutscene_extra_3_text_2": "Tá demorando pra chegar a nossa vez. Somos as melhores. Essa é nossa chance de virar tenentes agora.",
+		"cutscene_extra_4_text": "Perdão pela intrusão, meu Imperador. Perdemos forças na expedição. Recuperarei seu Chronodox. Não falharei.",
+
+		# Insígnias e Títulos dos 4 Especiais
+		"badge_abyss_killer": "★ CAÇADOR DE RECOMPENSAS ★",
+		"badge_r_07_echo": "★ MERCENÁRIA CIBERNÉTICA ★",
+		"badge_saria_yuna": "★ GÊMEAS DO IMPÉRIO KHEN ★",
+		"badge_aurelia_voss": "★ GENERAL DO IMPÉRIO KHEN ★",
+
+		# Nomes de Exibição
+		"name_abyss_killer": "Abyss Killer",
+		"name_r_07_echo": "R-07 Echo",
+		"name_saria_yuna": "Saria & Yuna",
+		"name_aurelia_voss": "General Aurelia Voss",
+
+		# Falas do Encontro (Cutscene)
+		"cs_abyss_killer_speak": "Vocês torraram meu contrato! Cadê a cabeça de Xylox que eu ia levar pra Federação? Agora vou levar a de vocês!",
+		"cs_abyss_killer_reply": "Um... Kaijin de chamas azuis?! Não importa a sua carcaça. O que o Lorde Ciano faria numa hora dessas...? 'Se for pra quebrar, que quebre brilhando!' Em guarda!",
+		"cs_r07_echo_speak": "Valeria X-9 guardava os códigos do meu cérebro orgânico original! Minhas memórias humanas foram pro lixo junto com ela por culpa de vocês!",
+		"cs_r07_echo_reply": "Menos choro de lata velha e mais ação! Se quer um pedaço da gente pra descontar sua raiva, vem buscar!",
+		"cs_saria_yuna_speak": "Yuna, olha! Eles tão com o Chronodox!",
+		"cs_saria_yuna_reply": "Mais deles. Essas duas parecem diferentes. A assinatura etérica delas destoa do resto. É uma dobra em Moebius invertida!",
+		"cs_aurelia_voss_speak": "Então foram vocês que derrotaram minhas oficiais. Mas agora será o fim de vocês.",
+		"cs_aurelia_voss_reply": "Diretriz hostil confirmada. Probabilidade de rendição da equipe: zero por cento. Iniciando combate imediato.",
+
+		# Frases de Morte
+		"dying_abyss_killer": "Droga... Eu subestimei vocês...",
+		"dying_r07_echo": "Minhas... memórias... se apagando de vez...",
+		"dying_saria_yuna": "O Império Khen... jamais perdoará isso...",
+		"dying_aurelia_voss": "Khen-Shalom... destruirá todos vocês...",
+					"cs_saria_yuna_speak_2": "Eu vi, Saria! Se levarmos isso, finalmente vão reconhecer a gente!",
+},
+	"en": {
+		"cs_to_be_continued": "TO BE CONTINUED...",
+		"cs_post_credits_echo": "[i](Panting)[/i] Damn it... My systems aren't responding... How many of you are left...?! So this is where I shut down...?",
+		"cs_post_credits_akiba_1": "I don't know who you are, but I've got nothing left to do around here and I'm sick of this place.",
+		"cs_post_credits_akiba_2": "I'm Akiba, by the way.",
+		
+		# Roles and Titles
+		"role_humano": "Captain",
+		"role_mutante": "Tank / Brawler",
+		"role_alien": "Elemental DPS",
+		"role_robo": "Support",
+
+		# Title & Language
+		"lang_prompt": "SELECT LANGUAGE  /  SELECIONE O IDIOMA  /  言語選択",
+		"btn_start_game": "START MISSION",
+		"btn_quit_game": "QUIT GAME",
+
+		# HUD & Exploration
+		"hud_floor": "FLOOR: %d (Orbital Station)\nKEY: %s\nTREASURES: %d",
+		"hud_key_yes": "YES (ALERT ACTIVE)",
+		"hud_key_no": "NO",
+		"hud_mission_title": "DATA DRIVE MISSION:\nHunt %s: %02d/%02d\nOrbital Floor %d",
+		"hud_mission_complete": "DATA COLLECTED\nQuota Completed!\nReturn to Terminal!",
+		"interaction_chest_closed": "[E] Open Chest",
+		"interaction_chest_opened": "Empty Chest",
+		"interaction_heal": "[E] Use Med Pod (Restore Squad)",
+		"interaction_portal_locked": "[E / A] Enter Portal (Key Required)",
+		"interaction_portal_unlocked": "[E / A] Enter Portal",
+		"interaction_spooter": "[E] Play Space Spooter",
+		"interaction_spooter_off": "Terminal Offline (Out of power)",
+		"interaction_terminal": "[E] Access Data Terminal",
+		"interaction_terminal_off": "Terminal Offline (Calibration Done)",
+		"interaction_orb": "[E] Collect Data Overflow (%s)",
+		"interaction_hidden": "[E] Hidden Cache Detected",
+		"interaction_hidden_done": "Cache Already Collected",
+		"interaction_csouter": "[E] Pick up C-Souter (Telemetry Radar)",
+		"interaction_csouter_done": "Item Collected",
+
+		# Hole Keeper & Core
+		"interaction_hole_keeper": "[E] Talk to Hole Keeper",
+		"interaction_hole_keeper_done": "Quantum Rift Empty",
+		"party_source": "SOURCE",
+		"party_battery": "SOURCE",
+		"hk_title": "★ QUANTUM RIFT - HOLE KEEPER %s",
+		"hk_intro_dialogue": "« The previous branch lost the sphere again?! Incompetents! Hand over the Chronodox so I can recalibrate your suit's core. »",
+		"hk_no_chronodox_msg": "You do not have the Chronodox to negotiate with the Hole Keeper!",
+		"hk_btn_hand_chronodox": "[ E / ENTER ] Hand over Chronodox (-1 Treasure)",
+		"hk_btn_leave": "[ESC] Exit Rift",
+		"hk_select_crew_title": "SELECT CREW MEMBER FOR CORE MODIFICATION:",
+		"hk_mod_hp_name": "HP Core",
+		"hk_mod_hp_tag": "+HP\n-MP",
+		"hk_mod_mp_name": "MP Core",
+		"hk_mod_mp_tag": "+MP\n-HP",
+		"hk_mod_vel_name": "SPD Core",
+		"hk_mod_vel_tag": "+VEL\n-DMG",
+		"hk_mod_dmg_name": "DMG Core",
+		"hk_mod_dmg_tag": "+DMG\n-VEL",
+		"hk_mod_restore_name": "Restore Core to Normal",
+		"hk_btn_back_crew": "[ESC] Back / Choose Another Member",
+		"popup_battery_applied_title": "★ CORE MODIFIED SUCCESSFULLY!",
+		"popup_battery_applied_desc": "%s's core recalibrated!",
+		"popup_battery_restored_title": "★ CORE RESTORED!",
+		"popup_battery_restored_desc": "%s's core has been restored to Normal status!",
+		"hk_no_treasure_restore": "Insufficient resources! 1 Treasure is required to restore core.",
+
+		# Popups and Events
+		"popup_detector_title": "★ RARE COMBAT SPOIL!",
+		"popup_detector_desc": "The horde dropped a Metal Detector!\nResonance signals linked to squad radar.",
+		"popup_csouter_title": "★ C-SOUTER ACQUIRED SUCCESSFULLY!",
+		"popup_csouter_desc": "Optical combat radar calibrated to squad HUD.",
+		"popup_spooter_buff_title": "★ SPACE SPOOTER BUFF ACTIVATED!",
+		"popup_spooter_buff_desc": "Impenetrable Defense protocol assimilated successfully!",
+		"popup_datadrive_title": "★ DATA DRIVE CALIBRATED SUCCESSFULLY!",
+		"popup_datadrive_desc": "Data Drive calibrated and synchronized with %s!",
+		"popup_chronodox_title": "★ ARTIFACT TREASURE REVEALED!",
+		"popup_chronodox_desc": "The squad has acquired an invaluable artifact: Chronodox!",
+		"popup_chronodox_kira_desc": "The squad acquired the Chronodox and KIRA REJOINED THE TEAM!",
+		"popup_kira_away_warn": "Kira grew impatient with the pace and stormed ahead through the corridors!",
+		"popup_kira_away_title": "⚠ WARNING:",
+		"kira_away_dialogue": "Human, you're pacing around like a dizzy cockroach against the wall! Tiring just to watch... I'm done waiting, I'm going ahead to smash some doors!",
+		"popup_level_up_title": "TACTICAL PROGRESSION!",
+		"popup_level_up_body": "%s Attributes increased!",
+		"esc_confirm_title": "RETURN TO TITLE?",
+		"esc_confirm_yes": "YES (Quit)",
+		"esc_confirm_no": "NO",
+
+		# Popups of Defeated Masters
+		"popup_master_drone_title": "★ VICTOR-PRIME DESTROYED!",
+		"popup_master_drone_desc": "Victor-Prime was obliterated!\nThe Drone command network has collapsed completely.",
+		"popup_master_mutante_title": "★ GHORGORATH SLAIN!",
+		"popup_master_mutante_desc": "Dr. Ghorgorath fell!\nThe biological chain of the Mutant Beasts has been shattered.",
+		"popup_master_androide_title": "★ VALERIA X-9 DEACTIVATED!",
+		"popup_master_androide_desc": "Valeria X-9 was dismantled!\nThe hostile directive of Corrupted Androids has been severed.",
+		"popup_master_alien_title": "★ XYLOX PURGED!",
+		"popup_master_alien_desc": "Xylox was purged!\nThe psychic resonance of Alien Scouts has been severed.",
+
+		# Party Menu
+		"party_title": "SQUAD STATUS",
+		"party_subtitle": "TACTICAL LOG, EQUIPMENT LOADOUT AND CREW ATTRIBUTES",
+		"party_cargo": "CARGO",
+		"party_status_alive": "ALIVE",
+		"party_status_dead": "INCAPACITATED",
+		"party_status_away": "ABSENT",
+		"party_target": "TARGET",
+		"party_footer": "[TAB / ESC] Return   |   [1 - 4] Toggle Tactical Target",
+		"party_spooter_banner": "★ IMPENETRABLE DEFENSE PROTOCOL ACTIVE",
+
+		# Combate
+		"battle_boss_badge": "★ TIME EMPEROR - FINAL BOSS ★",
+		"battle_purge_badge": "⚠ PURGE PROTOCOL ACTIVE ⚠",
+		"battle_weakened_badge": "▼ DISORGANIZED TROOPS ▼",
+		"battle_act_attack": "[1] Single Attack",
+		"battle_act_skills": "[2] Skills",
+		"battle_act_defend": "[3] Defend",
+		"battle_act_defend_buff": "[3] ★ Defend (Impenetrable)",
+		"battle_act_flee": "[4] Flee (Squad)",
+		"battle_skill_aoe": "[1] Area Magic (15 MP)",
+		"battle_skill_heal_single": "[2] Critical Heal (10 MP)",
+		"battle_skill_drive": "[3] Drive (30 MP)",
+		"battle_skill_taunt": "[3] Taunt (20 MP)",
+		"battle_skill_obscure": "[3] Obscure (30 MP)",
+		"battle_skill_heal_party": "[3] Party Heal (20 MP)",
+		"battle_skill_locked_fmt": "[3] %s [Locked Lv.5]",
+		"battle_skill_back": "[4] Back",
+		"battle_csouter_title": "◈ C-SOUTER RADAR ◈",
+		"battle_csouter_readout": "TARGET: %s\nUNITS: %d\nTOTAL PL: [ %d ]",
+
+		# Game Over & Relatórios
+		"gameover_title": "THE CAPTAIN HAS FALLEN\nMISSION FAILED",
+		"mission_report_title": "MISSION REPORT:",
+		"gameover_stats": "• Floor Reached:     %d\n• Enemies Neutralized: %d\n• Treasures Found:   %d\n• Chronodox:         %s\n• Surviving Allies:  %d / 4",
+		"gameover_retry_btn": "RETURN TO TITLE",
+		"chronodox_found": "RETRIEVED SUCCESSFULLY",
+		"chronodox_not_found": "NOT FOUND",
+
+		# Vault Chamber & Double Bonus
+		"vault_prompt_title": "★ DATA VAULT - EXTRACTION PROTOCOL ★",
+		"vault_prompt_desc": "Sensors detect depressurized telemetry compartments.\nHow will the Captain proceed?",
+		"vault_btn_start": "[ 1 / E ] Start Challenge (10 Caches in 60s - Double Bounty if all collected)",
+		"vault_btn_skip": "[ 2 / ESC ] Safe Quota (Secure 5 EXP Caches & Exit)",
+		"vault_countdown_go": "GO!",
+		"vault_safe_title": "★ SAFE QUOTA SECURED ★",
+		"vault_safe_desc": "5 telemetry caches were safely secured (+%d EXP, +5 Treasures).\nMed Pod and Exit Portal materialized.",
+		"vault_win_step1_title": "★ EXTRACTION COMPLETE (10/10) ★",
+		"vault_win_step1_desc": "Incredible! All 10 data containers were retrieved before lockdown!",
+		"vault_win_step2_title": "★ DOUBLE BOUNTY ACTIVATED! ★",
+		"vault_win_step2_desc": "Flawless run! The reward was DOUBLED (+%d extra EXP and +10 bonus Treasures)!",
+		"vault_time_up_title": "TIME'S UP (%d/10)",
+		"vault_time_up_desc": "Chamber locked. Exit portal and med pod materialized.",
+
+		# Créditos
+		"victory_title": "MISSION ACCOMPLISHED\nSTATION ABYSS CONQUERED",
+		"victory_stats": "• Final Floor Reached:    %d\n• Enemies Neutralized:    %d\n• Treasures Found:        %d\n• Chronodox:              %s\n• Squad Status:           SURVIVORS",
+		"victory_prompt": "[ Press SPACE / ENTER to Return to Menu ]",
+
+		# Cutscenes Extras dos Pods Médicos
+		"cutscene_extra_1_text": "My target is here. Station Abyss. You're not escaping this time.",
+		"cutscene_extra_2_text": "Valeria... so this is where you are. With my answers.",
+		"cutscene_extra_3_text_1": "Wow, it's been a while since I saw the Empire this empty.",
+		"cutscene_extra_3_text_2": "It's taking forever for our turn. We're the best. This is our chance to become lieutenants now.",
+		"cutscene_extra_4_text": "Forgive the intrusion, my Emperor. We lost forces on the expedition. I will recover your Chronodox. I will not fail.",
+
+		# Insígnias e Títulos dos 4 Especiais
+		"badge_abyss_killer": "★ BOUNTY HUNTER ★",
+		"badge_r_07_echo": "★ CYBERNETIC MERCENARY ★",
+		"badge_saria_yuna": "★ KHEN IMPERIAL TWINS ★",
+		"badge_aurelia_voss": "★ KHEN IMPERIAL GENERAL ★",
+
+		# Nomes de Exibição
+		"name_abyss_killer": "Abyss Killer",
+		"name_r_07_echo": "R-07 Echo",
+		"name_saria_yuna": "Saria & Yuna",
+		"name_aurelia_voss": "General Aurelia Voss",
+
+		# Falas do Encontro (Cutscene)
+		"cs_abyss_killer_speak": "You burned my contract! Where's Xylox's head I was supposed to take to the Federation? Now I'll take yours!",
+		"cs_abyss_killer_reply": "A... Kaijin clad in blue flame?! Your armor doesn't intimidate me. What would Lord Cyan do right now...? 'If it's going to break, let it break shining!' On guard!",
+		"cs_r07_echo_speak": "Valeria X-9 held the neural keys to my organic mind! My human memories were obliterated alongside her because of you!",
+		"cs_r07_echo_reply": "Less whining and more fighting! If you want a piece of us to vent your rage, come and get it!",
+		"cs_saria_yuna_speak": "Yuna, look! They have the Chronodox!",
+		"cs_saria_yuna_reply": "More of them. These two seem different. Their etheric signature stands out from the rest. It's a reversed Moebius fold!",
+		"cs_aurelia_voss_speak": "So you were the ones who defeated my officers. But now will be your end.",
+		"cs_aurelia_voss_reply": "Hostile directive confirmed. Squad surrender probability: zero percent. Engaging maximum combat protocols.",
+
+		# Frases de Morte
+		"dying_abyss_killer": "Damn it... I underestimated you...",
+		"dying_r07_echo": "My... memories... fading away...",
+		"dying_saria_yuna": "The Khen Empire... will never forgive this...",
+		"dying_aurelia_voss": "Khen-Shalom... will finish you all...",
+					"cs_saria_yuna_speak_2": "I saw it, Saria! If we bring this, they'll finally recognize us!",
+},
+	"ja": {
+		"cs_to_be_continued": "つづく",
+		"cs_post_credits_echo": "[i]（息を荒げて）[/i]くそっ... システムが応答しない... まだ何体残ってるのよ...？！ 私の機能停止は、ここだって言うの...？",
+		"cs_post_credits_akiba_1": "あんたが誰かは知らんが、ここに用はなくなったし、この場所には心底イラついてたところだ。",
+		"cs_post_credits_akiba_2": "アキバだ。名乗っておく。",
+		
+		# Roles and Titles
+		"role_humano": "隊長",
+		"role_mutante": "タンク / ブローラー",
+		"role_alien": "元素アタッカー",
+		"role_robo": "サポート",
+
+		# Title & Language
+		"lang_prompt": "言語選択  /  SELECT LANGUAGE  /  SELECIONE O IDIOMA",
+		"btn_start_game": "ミッション開始",
+		"btn_quit_game": "ゲーム終了",
+
+		# HUD & Exploration
+		"hud_floor": "階層: %d (軌道ステーション)\nキー: %s\n宝箱: %d",
+		"hud_key_yes": "あり (警報発令中)",
+		"hud_key_no": "なし",
+		"hud_mission_title": "データドライブミッション:\n討伐 %s: %02d/%02d\n軌道階層 %d",
+		"hud_mission_complete": "データ収集完了\nノルマ達成！\n端末へ戻れ！",
+		"interaction_chest_closed": "[E] 宝箱を開ける",
+		"interaction_chest_opened": "空の宝箱",
+		"interaction_heal": "[E] 医療ポッドを使用 (部隊全回復)",
+		"interaction_portal_locked": "[E / A] ゲートに入る (鍵が必要)",
+		"interaction_portal_unlocked": "[E / A] ゲートに入る",
+		"interaction_spooter": "[E] スペース・スプーターをプレイ",
+		"interaction_spooter_off": "端末停止中 (機能停止)",
+		"interaction_terminal": "[E] データ端末にアクセス",
+		"interaction_terminal_off": "端末停止中 (調整完了)",
+		"interaction_orb": "[E] 溢れ出たデータを回収 (%s)",
+		"interaction_hidden": "[E] 隠し反応を検知",
+		"interaction_hidden_done": "回収済みカプセル",
+		"interaction_csouter": "[E] C-スカウターを入手 (テレメトリーレーダー)",
+		"interaction_csouter_done": "入手済みアイテム",
+
+		# Hole Keeper & Core
+		"interaction_hole_keeper": "[E] ホールの番人と話す",
+		"interaction_hole_keeper_done": "量子裂け目は空っぽだ",
+		"party_source": "動力源",
+		"party_battery": "動力源",
+		"hk_title": "★ 量子亀裂 - ホールの番人 %s",
+		"hk_intro_dialogue": "« 前の支店がまた球体を紛失しただと？！ 無能め！ クロノドックスを渡せば、スーツのコアを再調整してやる。 »",
+		"hk_no_chronodox_msg": "ホールの番人と取引するためのクロノドックスを持っていません！",
+		"hk_btn_hand_chronodox": "[ E / ENTER ] クロノドックスを渡す (宝箱 -1)",
+		"hk_btn_leave": "[ESC] 亀裂を去る",
+		"hk_select_crew_title": "コア改造を行うメンバーを選択:",
+		"hk_mod_hp_name": "HPコア",
+		"hk_mod_hp_tag": "+HP\n-MP",
+		"hk_mod_mp_name": "MPコア",
+		"hk_mod_mp_tag": "+MP\n-HP",
+		"hk_mod_vel_name": "速度コア",
+		"hk_mod_vel_tag": "+VEL\n-DMG",
+		"hk_mod_dmg_name": "火力コア",
+		"hk_mod_dmg_tag": "+DMG\n-VEL",
+		"hk_mod_restore_name": "コアを通常状態に復元",
+		"hk_btn_back_crew": "[ESC] 戻る / 別のメンバーを選択",
+		"popup_battery_applied_title": "★ コア改造成功！",
+		"popup_battery_applied_desc": "%s のコアが再調整されました！",
+		"popup_battery_restored_title": "★ コア復元完了！",
+		"popup_battery_restored_desc": "%s のコアが通常状態に復元されました！",
+		"hk_no_treasure_restore": "リソース不足！ コア復元には宝箱が1つ必要です。",
+
+		# Popups of Defeated Masters
+		"popup_master_drone_title": "★ ヴィクター・プライム撃破！",
+		"popup_master_drone_desc": "ヴィクター・プライム粉砕！ ドローン統制網が完全に崩壊した。",
+		"popup_master_mutante_title": "★ Dr.ゴルゴラス討伐！",
+		"popup_master_mutante_desc": "Dr.ゴルゴラス討伐！ 変異獣の生物連鎖が崩壊した。",
+		"popup_master_androide_title": "★ ヴァレリア X-9 停止！",
+		"popup_master_androide_desc": "ヴァレリア X-9 停止！ 汚染アンドロイドの敵対指令が遮断された。",
+		"popup_master_alien_title": "★ サイロックス殲滅！",
+		"popup_master_alien_desc": "サイロックス殲滅！ 斥候エイリアンの精神共鳴が途絶えた。",
+
+		# Popups e Eventos
+		"popup_detector_title": "★ 貴重な戦利品を獲得！",
+		"popup_detector_desc": "敵群が金属探知機をドロップした！\n共鳴シグナルが部隊レーダーに接続されました。",
+		"popup_csouter_title": "★ C-スカウター獲得成功！",
+		"popup_csouter_desc": "光学戦闘レーダーを部隊バイザーに同期完了。",
+		"popup_spooter_buff_title": "★ スペース・スプーターバフ発動！",
+		"popup_spooter_buff_desc": "絶対防御プロトコルの同期に成功！",
+		"popup_datadrive_title": "★ データドライブの調整完了！",
+		"popup_datadrive_desc": "%sにデータドライブを同期完了！",
+		"popup_chronodox_title": "★ 秘宝アーティファクト発見！",
+		"popup_chronodox_desc": "部隊は計り知れない価値を持つ秘宝「クロノドックス」を獲得した！",
+		"popup_chronodox_kira_desc": "クロノドックスを獲得し、キラが部隊に復帰した！",
+		"popup_kira_away_warn": "キラは歩みの遅さに痺れを切らし、単身先行してしまった！",
+		"popup_kira_away_title": "⚠ 警告:",
+		"kira_away_dialogue": "人間、アンタ壁に向かってフラフラ歩いてゴキブリみたいよ！ 見てるだけで疲れるわ... 待つのも飽きたし、先に行って扉でもぶち破ってくる！",
+		"popup_level_up_title": "戦術レベルアップ！",
+		"popup_level_up_body": "%s ステータスが上昇した！",
+		"esc_confirm_title": "タイトルに戻りますか？",
+		"esc_confirm_yes": "はい (終了)",
+		"esc_confirm_no": "いいえ",
+
+		# Party Menu
+		"party_title": "部隊ステータス",
+		"party_subtitle": "戦術記録・装備スロット・部隊能力値",
+		"party_cargo": "装備",
+		"party_status_alive": "生存",
+		"party_status_dead": "戦闘不能",
+		"party_status_away": "離脱中",
+		"party_target": "標的",
+		"party_footer": "[TAB / ESC] 戻る   |   [1 - 4] 戦術標的切替",
+		"party_spooter_banner": "★ 絶対防御プロトコル稼働中",
+
+		# Combate
+		"battle_boss_badge": "★ 時間の皇帝 - 最終ボス ★",
+		"battle_purge_badge": "⚠ 粛清プロトコル作動中 ⚠",
+		"battle_weakened_badge": "▼ 統率崩壊 ▼",
+		"battle_act_attack": "[1] 単体攻撃",
+		"battle_act_skills": "[2] スキル",
+		"battle_act_defend": "[3] 防御",
+		"battle_act_defend_buff": "[3] ★ 絶対防御",
+		"battle_act_flee": "[4] 逃走 (部隊)",
+		"battle_skill_aoe": "[1] 範囲魔法 (15 MP)",
+		"battle_skill_heal_single": "[2] 単体回復 (10 MP)",
+		"battle_skill_drive": "[3] ドライブ (30 MP)",
+		"battle_skill_taunt": "[3] 挑発 (20 MP)",
+		"battle_skill_obscure": "[3] オブスキュア (30 MP)",
+		"battle_skill_heal_party": "[3] 全体回復 (20 MP)",
+		"battle_skill_locked_fmt": "[3] %s [Lv.5で解放]",
+		"battle_skill_back": "[4] 戻る",
+		"battle_csouter_title": "◈ C-SOUTER レーダー ◈",
+		"battle_csouter_readout": "対象: %s\n個体数: %d\n総PL: [ %d ]",
+		
+		# 宝物庫 & ダブルボーナス
+		"vault_prompt_title": "★ 機密データ宝物庫 - 回収プロトコル ★",
+		"vault_prompt_desc": "減圧されたデータ保管区画を検知。\n隊長、作戦を選択してください:",
+		"vault_btn_start": "[ 1 / E ] チャレンジ開始 (60秒で10個回収 - 全回収でボーナス2倍)",
+		"vault_btn_skip": "[ 2 / ESC ] 安全確保 (5個分のEXPを獲得して即時離脱)",
+		"vault_countdown_go": "スタート！",
+		"vault_safe_title": "★ 基本報酬を確保 ★",
+		"vault_safe_desc": "5個分のデータが安全に回収されました (+%d EXP, +5 宝箱)。\n医療ポッドと脱出ゲートが開放されました。",
+		"vault_win_step1_title": "★ 回収完了 (10/10) ★",
+		"vault_win_step1_desc": "素晴らしい！ 制限時間内に全10個のコンテナを回収しました！",
+		"vault_win_step2_title": "★ 報酬2倍ボーナス発動！ ★",
+		"vault_win_step2_desc": "パーフェクト達成！ 報酬が2倍になりました (+%d 追加EXP, +10 追加宝箱)！",
+		"vault_time_up_title": "時間切れ (%d/10)",
+		"vault_time_up_desc": "チャンバー閉鎖。脱出ゲートと医療ポッドが出現しました。",
+
+		# Game Over & Relatórios
+		"gameover_title": "隊長戦死\n作戦失敗",
+		"mission_report_title": "作戦報告:",
+		"gameover_stats": "• 到達階層:      %d\n• 撃破敵数:      %d\n• 獲得宝箱:      %d\n• クロノドックス:  %s\n• 生存仲間:      %d / 4",
+		"gameover_retry_btn": "タイトルに戻る",
+		"chronodox_found": "回収成功",
+		"chronodox_not_found": "未発見",
+
+		# Créditos
+		"victory_title": "作戦完了\nSTATION ABYSS 攻略",
+		"victory_stats": "• 最終到達階層:            %d\n• 撃破敵数:                %d\n• 獲得宝箱:                %d\n• クロノドックス:          %s\n• 部隊状況:                生存",
+		"victory_prompt": "[ SPACE / ENTER キーでメニューへ戻る ]",
+
+		# Cutscenes Extras dos Pods Médicos
+		"cutscene_extra_1_text": "標的はここだ。ステーション・アビス。今度は逃がさない。",
+		"cutscene_extra_2_text": "ヴァレリア…ここにいたのね。私の答えと一緒に。",
+		"cutscene_extra_3_text_1": "うわ、帝国がこんなにガラガラなの久しぶりに見るわ。",
+		"cutscene_extra_3_text_2": "私たちの番、なかなか来ないわね。私たちが一番なのに。これで正式な中尉になれるチャンスよ。",
+		"cutscene_extra_4_text": "ご無礼をお許しください、皇帝陛下。遠征で兵を失いました。必ずやクロノドックスを回収いたします。決して失敗いたしません。",
+
+		# Insígnias e Títulos dos 4 Especiais
+		"badge_abyss_killer": "★ 賞金稼ぎ ★",
+		"badge_r_07_echo": "★ サイバネティック・傭兵 ★",
+		"badge_saria_yuna": "★ ケン帝国 双子の将校 ★",
+		"badge_aurelia_voss": "★ ケン帝国 帝国将軍 ★",
+
+		# Nomes de Exibição
+		"name_abyss_killer": "アビスキラー",
+		"name_r_07_echo": "R-07 エコー",
+		"name_saria_yuna": "サリア＆ユナ",
+		"name_aurelia_voss": "アウレリア・フォス将軍",
+
+		# Falas do Encontro (Cutscene)
+		"cs_abyss_killer_speak": "俺の契約を燃やしやがったな！連邦に持っていくはずのサイロックスの首はどこだ？今度はお前らの首をもらう！",
+		"cs_abyss_killer_reply": "青き炎の... 怪人（カイジン）だと？！ どんな装甲だろうと屈するものか。こんな時、ロード・シアンならどうする...？ 『砕け散るなら、眩く輝いて散れ！』 構えろ！",
+		"cs_r07_echo_speak": "ヴァレリアX-9は私の元の生体脳のキーを持っていた！私の人間の記憶は、アンタ達のせいで彼女の残骸と共に消え去ったのよ！",
+		"cs_r07_echo_reply": "能書きはいいからかかってきなさい！八つ当たりしたいなら、力ずくで奪ってみせなさいよ！",
+		"cs_saria_yuna_speak": "ユナ、見て！あいつらクロノドックスを持ってる！",
+		"cs_saria_yuna_reply": "また彼らね。でもこの二人は違うわ。エーテル署名が他と違う。逆メビウスに折れた襞みたい！",
+		"cs_aurelia_voss_speak": "やはりお前たちが私の将校を倒したのか。だがここで終わりだ。",
+		"cs_aurelia_voss_reply": "敵対指令を確認。部隊の降伏確率：0パーセント。最大戦闘プロトコルを開始します。",
+
+		# Frases de Morte
+		"dying_abyss_killer": "くそっ... 貴様らを甘く見ていた...",
+		"dying_r07_echo": "私の... 記憶が... 完全に消えていく...",
+		"dying_saria_yuna": "ケン帝国が... 許すはずがない...",
+		"dying_aurelia_voss": "ケン・シャローム様が... 貴様らを滅ぼす...",
+					"cs_saria_yuna_speak_2": "見たわ、サリア！これを持ち帰れば、やっと認められるわ！",
+},
+	"de": {
+		"cs_to_be_continued": "FORTSETZUNG FOLGT...",
+		"cs_post_credits_echo": "[i](Keuchend)[/i] Verdammt... Meine Systeme reagieren nicht mehr... Wie viele von euch sind noch da...?! Werde ich hier also abgeschaltet...?",
+		"cs_post_credits_akiba_1": "Ich weiß nicht, wer du bist, aber ich habe hier nichts mehr zu tun und dieser Ort kotzt mich an.",
+		"cs_post_credits_akiba_2": "Ich bin übrigens Akiba.",
+		
+		# Rollen und Titel
+		"role_humano": "Kapitän",
+		"role_mutante": "Tank / Brawler",
+		"role_alien": "Elementar-DPS",
+		"role_robo": "Unterstützung",
+
+		# Titel & Sprache
+		"lang_prompt": "SPRACHE WÄHLEN  /  SELECT LANGUAGE  /  SELECIONE O IDIOMA  /  言語選択",
+		"btn_start_game": "MISSION STARTEN",
+		"btn_quit_game": "SPIEL BEENDEN",
+
+		# HUD & Erkundung
+		"hud_floor": "EBENE: %d (Orbitalstation)\nSCHLÜSSEL: %s\nSCHÄTZE: %d",
+		"hud_key_yes": "JA (ALARM AKTIV)",
+		"hud_key_no": "NEIN",
+		"hud_mission_title": "DATENLAUFWERK-MISSION:\nJage %s: %02d/%02d\nOrbitalebene %d",
+		"hud_mission_complete": "DATEN GESAMMELT\nQuote erfüllt!\nKehre zum Terminal zurück!",
+		"interaction_chest_closed": "[E] Truhe öffnen",
+		"interaction_chest_opened": "Leere Truhe",
+		"interaction_heal": "[E] Med-Kapsel benutzen (Gruppe heilen)",
+		"interaction_portal_locked": "[E / A] Portal betreten (Schlüssel benötigt)",
+		"interaction_portal_unlocked": "[E / A] Portal betreten",
+		"interaction_spooter": "[E] Space Spooter spielen",
+		"interaction_spooter_off": "Terminal offline (Energie erschöpft)",
+		"interaction_terminal": "[E] Datenterminal bedienen",
+		"interaction_terminal_off": "Terminal offline (Kalibrierung abgeschlossen)",
+		"interaction_orb": "[E] Datenüberlauf einsammeln (%s)",
+		"interaction_hidden": "[E] Verstecktes Versteck entdeckt",
+		"interaction_hidden_done": "Kapsel bereits geborgen",
+		"interaction_csouter": "[E] C-Souter aufheben (Telemetrie-Radar)",
+		"interaction_csouter_done": "Objekt geborgen",
+
+		# Hole Keeper & Kern
+		"interaction_hole_keeper": "[E] Mit dem Hole Keeper sprechen",
+		"interaction_hole_keeper_done": "Quantenriss leer",
+		"party_source": "QUELLE",
+		"party_battery": "QUELLE",
+		"hk_title": "★ QUANTENRISS - HOLE KEEPER %s",
+		"hk_intro_dialogue": "« Die vorherige Zweigstelle hat die Sphäre schon wieder verloren?! Inkompetente Narren! Übergib mir den Chronodox, damit ich den Kern deines Anzugs rekalibrieren kann. »",
+		"hk_no_chronodox_msg": "Du besitzt keinen Chronodox, um mit dem Hole Keeper zu verhandeln!",
+		"hk_btn_hand_chronodox": "[ E / ENTER ] Chronodox übergeben (-1 Schatz)",
+		"hk_btn_leave": "[ESC] Riss verlassen",
+		"hk_select_crew_title": "WÄHLE DAS BESATZUNGSMITGLIED FÜR DIE KERNMODIFIKATION:",
+		"hk_mod_hp_name": "HP-Kern",
+		"hk_mod_hp_tag": "+HP\n-MP",
+		"hk_mod_mp_name": "MP-Kern",
+		"hk_mod_mp_tag": "+MP\n-HP",
+		"hk_mod_vel_name": "GES-Kern",
+		"hk_mod_vel_tag": "+GES\n-SCH",
+		"hk_mod_dmg_name": "SCH-Kern",
+		"hk_mod_dmg_tag": "+SCH\n-GES",
+		"hk_mod_restore_name": "Kern auf Normalzustand zurücksetzen",
+		"hk_btn_back_crew": "[ESC] Zurück / Anderes Mitglied wählen",
+		"popup_battery_applied_title": "★ KERN ERFOLGREICH MODIFIZIERT!",
+		"popup_battery_applied_desc": "Kern von %s rekalibriert!",
+		"popup_battery_restored_title": "★ KERN WIEDERHERGESTELLT!",
+		"popup_battery_restored_desc": "Der Kern von %s wurde auf den Normalzustand zurückgesetzt!",
+		"hk_no_treasure_restore": "Unzureichende Ressourcen! 1 Schatz ist erforderlich, um den Kern wiederherzustellen.",
+
+		# Popups und Ereignisse
+		"popup_detector_title": "★ SELTENE KAMPFBEUTE!",
+		"popup_detector_desc": "Die Horde hat einen Metalldetektor fallen gelassen!\nResonanzsignale mit dem Trupp-Radar gekoppelt.",
+		"popup_csouter_title": "★ C-SOUTER ERFOLGREICH ERHALTEN!",
+		"popup_csouter_desc": "Optisches Kampfradar im Visier des Trupps ausgerüstet.",
+		"popup_spooter_buff_title": "★ SPACE SPOOTER BUFF AKTIVIERT!",
+		"popup_spooter_buff_desc": "Protokoll der Undurchdringlichen Verteidigung erfolgreich assimiliert!",
+		"popup_datadrive_title": "★ DATENLAUFWERK ERFOLGREICH KALIBRIERT!",
+		"popup_datadrive_desc": "Datenlaufwerk kalibriert und mit %s synchronisiert!",
+		"popup_chronodox_title": "★ ARTEFAKT-SCHATZ ENTHÜLLT!",
+		"popup_chronodox_desc": "Der Trupp hat einen Schatz von unschätzbarem Wert geborgen: Chronodox!",
+		"popup_chronodox_kira_desc": "Der Trupp hat den Chronodox geborgen und KIRA HAT SICH DER GRUPPE WIEDER ANGESCHLOSSEN!",
+		"popup_kira_away_warn": "Kira verlor die Geduld wegen des schleppenden Tempos und stürmte allein durch die Korridore!",
+		"popup_kira_away_title": "⚠ ACHTUNG:",
+		"kira_away_dialogue": "Mensch, du läufst an den Wänden herum wie eine benommene Kakerlake! Schon vom Zusehen wird man müde... Ich hab genug vom Warten, ich geh vor und trete ein paar Türen ein!",
+		"popup_level_up_title": "TAKTISCHER STUFENAUFSTIEG!",
+		"popup_level_up_body": "%s Attribute erhöht!",
+		"esc_confirm_title": "ZUM TITELBILDSCHIRM ZURÜCKKEHREN?",
+		"esc_confirm_yes": "JA (Beenden)",
+		"esc_confirm_no": "NEIN",
+
+		# Popups der Besiegten Meister
+		"popup_master_drone_title": "★ VICTOR-PRIME WURDE ZERSTÖRT!",
+		"popup_master_drone_desc": "Victor-Prime wurde vernichtet!\nDas Drohnen-Befehlsnetzwerk ist vollständig zusammengebrochen.",
+		"popup_master_mutante_title": "★ DR. GHORGORATH WURDE ERLEGT!",
+		"popup_master_mutante_desc": "Dr. Ghorgorath ist gefallen!\nDie biologische Kette der Mutantenbestien wurde erschüttert.",
+		"popup_master_androide_title": "★ VALERIA X-9 WURDE DEAKTIVIERT!",
+		"popup_master_androide_desc": "Valeria X-9 wurde demontiert!\nDie feindliche Direktive der korrumpierten Androiden wurde getrennt.",
+		"popup_master_alien_title": "★ XYLOX WURDE AUSGELÖSCHT!",
+		"popup_master_alien_desc": "Xylox wurde vernichtet!\nDie psychische Resonanz der Alien-Späher wurde aufgelöst.",
+
+		# Trupp-Menü
+		"party_title": "TRUPP-STATUS",
+		"party_subtitle": "TAKTISCHES PROTOKOLL, AUSRÜSTUNG UND TRUPP-ATTRIBUTE",
+		"party_cargo": "FRACHT",
+		"party_status_alive": "LEBENDIG",
+		"party_status_dead": "KAMPFUNFÄHIG",
+		"party_status_away": "ABWESEND",
+		"party_target": "ZIEL",
+		"party_footer": "[TAB / ESC] Zurück   |   [1 - 4] Taktisches Ziel wechseln",
+		"party_spooter_banner": "★ PROTOKOLL DER UNDURCHDRINGLICHEN VERTEIDIGUNG AKTIV",
+
+		# Kampf
+		"battle_boss_badge": "★ ZEIT-IMPERATOR - ENDBOSS ★",
+		"battle_purge_badge": "⚠ SÄUBERUNGSPROTOKOLL AKTIV ⚠",
+		"battle_weakened_badge": "▼ DESORGANISIERTE TRUPPEN ▼",
+		"battle_act_attack": "[1] Einzelangriff",
+		"battle_act_skills": "[2] Fertigkeiten",
+		"battle_act_defend": "[3] Verteidigen",
+		"battle_act_defend_buff": "[3] ★ Verteidigen (Undurchdringlich)",
+		"battle_act_flee": "[4] Fliehen (Gruppe)",
+		"battle_skill_aoe": "[1] Flächenmagie (15 MP)",
+		"battle_skill_heal_single": "[2] Kritisches Heilen (10 MP)",
+		"battle_skill_drive": "[3] Drive (30 MP)",
+		"battle_skill_taunt": "[3] Provozieren (20 MP)",
+		"battle_skill_obscure": "[3] Obscure (30 MP)",
+		"battle_skill_heal_party": "[3] Gruppenheilung (20 MP)",
+		"battle_skill_locked_fmt": "[3] %s [Gesperrt St.5]",
+		"battle_skill_back": "[4] Zurück",
+		"battle_csouter_title": "◈ C-SOUTER RADAR ◈",
+		"battle_csouter_readout": "ZIEL: %s\nEINHEITEN: %d\nGESAMT-KL: [ %d ]",
+
+		# Game Over & Berichte
+		"gameover_title": "DER KAPITÄN IST GEFALLEN\nMISSION GESCHEITERT",
+		"mission_report_title": "MISSIONSBERICHT:",
+		"gameover_stats": "• Erreichte Ebene:        %d\n• Besiegte Feinde:        %d\n• Gesammelte Schätze:     %d\n• Chronodox:              %s\n• Überlebende Verbündete: %d / 4",
+		"gameover_retry_btn": "ZUM TITELBILDSCHIRM",
+		"chronodox_found": "ERFOLGREICH GEBORGEN",
+		"chronodox_not_found": "NICHT GEFUNDEN",
+
+		# Datentresor & Doppelbonus
+		"vault_prompt_title": "★ DATENTRESOR - EXTRAKTIONSPROTOKOLL ★",
+		"vault_prompt_desc": "Sensoren erfassen drucklose Telemetrie-Fächer.\nWie möchte der Kapitän verfahren?",
+		"vault_btn_start": "[ 1 / E ] Herausforderung starten (10 Truhen in 60s - Doppelter Bonus bei allen)",
+		"vault_btn_skip": "[ 2 / ESC ] Sichere Quote (5 EXP-Truhen sichern und Verlassen)",
+		"vault_countdown_go": "LOS!",
+		"vault_safe_title": "★ SICHERE QUOTE GESICHERT ★",
+		"vault_safe_desc": "5 Telemetrie-Truhen wurden sicher geborgen (+%d EXP, +5 Schätze).\nMed-Kapsel und Ausgangsportal materialisiert.",
+		"vault_win_step1_title": "★ EXTRAKTION ABGESCHLOSSEN (10/10) ★",
+		"vault_win_step1_desc": "Unglaublich! Alle 10 Datenbehälter wurden vor dem Zeitlimit geborgen!",
+		"vault_win_step2_title": "★ DOPPELTER BONUS AKTIVIERT! ★",
+		"vault_win_step2_desc": "Perfekte Leistung! Die Belohnung wurde VERDOPPELT (+%d extra EXP und +10 zusätzliche Schätze)!",
+		"vault_time_up_title": "ZEIT ABGELAUFEN (%d/10)",
+		"vault_time_up_desc": "Kammer verriegelt. Ausgangsportal und Heilungskapsel wurden aktiviert.",
+
+		# Abspann
+		"victory_title": "MISSION ERFÜLLT\nSTATION ABYSS BEZWUNGEN",
+		"victory_stats": "• Finale Ebene erreicht:  %d\n• Besiegte Feinde:        %d\n• Gesammelte Schätze:     %d\n• Chronodox:              %s\n• Trupp-Status:           ÜBERLEBENDE",
+		"victory_prompt": "[ Drücke LEERTASTE / ENTER, um zum Menü zurückzukehren ]",
+
+		# Cutscenes Extras dos Pods Médicos
+		"cutscene_extra_1_text": "Mein Ziel ist hier. Station Abyss. Diesmal entkommst du nicht.",
+		"cutscene_extra_2_text": "Valeria... also hier bist du. Mit meinen Antworten.",
+		"cutscene_extra_3_text_1": "Wow, es ist lange her, dass ich das Imperium so leer gesehen habe.",
+		"cutscene_extra_3_text_2": "Es dauert ewig, bis wir dran sind. Wir sind die Besten. Das ist jetzt unsere Chance, Leutnants zu werden.",
+		"cutscene_extra_4_text": "Verzeiht das Eindringen, mein Imperator. Wir haben Kräfte auf der Expedition verloren. Ich werde Euren Chronodox zurückholen. Ich werde nicht versagen.",
+
+		# Insígnias e Títulos dos 4 Especiais
+		"badge_abyss_killer": "★ KOPFGELDJÄGER ★",
+		"badge_r_07_echo": "★ KYBERNETISCHE SÖLDNERIN ★",
+		"badge_saria_yuna": "★ KHEN-IMPERIALE ZWILLINGE ★",
+		"badge_aurelia_voss": "★ GENERALIN DES KHEN-IMPERIUMS ★",
+
+		# Nomes de Exibição
+		"name_abyss_killer": "Abyss Killer",
+		"name_r_07_echo": "R-07 Echo",
+		"name_saria_yuna": "Saria & Yuna",
+		"name_aurelia_voss": "Generalin Aurelia Voss",
+
+		# Falas do Encontro (Cutscene)
+		"cs_abyss_killer_speak": "Ihr habt meinen Auftrag verbrannt! Wo ist Xylox' Kopf, den ich zur Föderation bringen sollte? Jetzt hole ich mir eure!",
+		"cs_abyss_killer_reply": "Ein... Kaijin in blauen Flammen?! Deine Rüstung schüchtert mich nicht ein. Was würde Lord Cyan jetzt tun...? 'Wenn es schon zerbricht, soll es leuchtend zerbrechen!' Auf der Hut!",
+		"cs_r07_echo_speak": "Valeria X-9 trug die neuronalen Schlüssel zu meinem menschlichen Verstand! Meine Erinnerungen wurden durch eure Schuld zusammen mit ihr vernichtet!",
+		"cs_r07_echo_reply": "Weniger Gejammer, mehr Taten! Wenn du deine Wut an uns auslassen willst, versuch es doch!",
+		"cs_saria_yuna_speak": "Yuna, schau! Sie haben den Chronodox!",
+		"cs_saria_yuna_reply": "Mehr von ihnen. Diese zwei scheinen anders zu sein. Ihre ätherische Signatur sticht heraus. Es ist eine invertierte Möbius-Falte!",
+		"cs_aurelia_voss_speak": "Also wart ihr es, die meine Offiziere besiegt haben. Aber jetzt ist euer Ende gekommen.",
+		"cs_aurelia_voss_reply": "Feindliche Direktive bestätigt. Kapitulationswahrscheinlichkeit: null Prozent. Initiiere maximale Kampfprotokolle.",
+
+		# Frases de Morte
+		"dying_abyss_killer": "Verdammt... Ich habe euch unterschätzt...",
+		"dying_r07_echo": "Meine... Erinnerungen... verblassen für immer...",
+		"dying_saria_yuna": "Das Khen-Imperium... wird das niemals vergeben...",
+		"dying_aurelia_voss": "Khen-Shalom... wird euch alle vernichten...",
+					"cs_saria_yuna_speak_2": "Ich hab's gesehen, Saria! Wenn wir das zurückbringen, werden sie uns endlich anerkennen!",
+}
+}
+
+static func set_language(lang: String) -> void:
+	if lang in ["pt", "en", "ja", "de"]:
+		current_language = lang
+
+static func t(key: String, default_text: String = "") -> String:
+	var lang_dict = STRINGS.get(current_language, STRINGS["pt"])
+	if lang_dict.has(key):
+		return lang_dict[key]
+	if STRINGS["pt"].has(key):
+		return STRINGS["pt"][key]
+	return default_text if default_text != "" else key
+
+static func get_text(key: String, default_text: String = "") -> String:
+	return t(key, default_text)
