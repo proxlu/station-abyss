@@ -1,2 +1,0 @@
-SystemFont
-Theme
