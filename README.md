@@ -20,3 +20,6 @@
 </li></ul>
 <p><strong class="ng-star-inserted">Página do jogo:</strong><span class="ng-star-inserted">&nbsp;</span><a class="ng-star-inserted" rel="noopener noreferrer" target="_blank" href="https://www.google.com/url?sa=E&amp;q=https%3A%2F%2Fgithub.com%2Fproxlu%2Fstation-abyss">https://proxlu.itch.io/station-abyss</a>
 </p>
+
+<img width="2096" height="1184" alt="841195185_1764096058135617_5934766484939232511_n" src="https://github.com/user-attachments/assets/afec5932-2a14-4cac-97a5-b3f78b7c5a18" />
+
