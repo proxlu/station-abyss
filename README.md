@@ -18,5 +18,5 @@
 </li><li><strong class="ng-star-inserted">Fliperama Retro "Space Spooter":</strong><span class="ng-star-inserted">&nbsp;Encontre terminais de arcade antigos funcionais pelos corredores e vença o minigame clássico de desviar de 100 meteoros para conceder a bênção permanente da&nbsp;</span><em>Defesa Impenetrável</em><span class="ng-star-inserted">&nbsp;à sua equipe.</span>
 </li><li><strong class="ng-star-inserted">Suporte Completo a Idiomas:</strong><span class="ng-star-inserted">&nbsp;Textos e diálogos inteiramente localizados em Português, Inglês e Japonês.</span>
 </li></ul>
-<p><strong class="ng-star-inserted">Código fonte:</strong><span class="ng-star-inserted">&nbsp;</span><a class="ng-star-inserted" rel="noopener noreferrer" target="_blank" href="https://www.google.com/url?sa=E&amp;q=https%3A%2F%2Fgithub.com%2Fproxlu%2Fstation-abyss">https://github.com/proxlu/station-abyss</a>
+<p><strong class="ng-star-inserted">Página do jogo:</strong><span class="ng-star-inserted">&nbsp;</span><a class="ng-star-inserted" rel="noopener noreferrer" target="_blank" href="https://www.google.com/url?sa=E&amp;q=https%3A%2F%2Fgithub.com%2Fproxlu%2Fstation-abyss">https://proxlu.itch.io/station-abyss</a>
 </p>
